@@ -1,6 +1,17 @@
 // FileSystem
 const fs = require('fs');
 
+// Atendiendo tickets pendientes, no se exporta por que se usa internamente
+class Ticket {
+    constructor(numero, escritorio) {
+
+
+        this.numero = numero;
+
+        this.escritorio = escritorio;
+
+    }
+}
 
 class TicketControl {
 
@@ -11,6 +22,8 @@ class TicketControl {
         this.ultimo = 0;
 
         this.hoy = new Date().getDate();
+
+        this.tickets = [];
 
 
         // Obteniendo información de data/data.json
@@ -24,6 +37,8 @@ class TicketControl {
 
 
             this.ultimo = data.ultimo;
+
+            this.tickets = data.tickets;
 
 
 
@@ -39,6 +54,12 @@ class TicketControl {
     siguienteTicket() {
 
         this.ultimo += 1;
+
+        let ticket = new Ticket(this.ultimo, null);
+
+        // Agregando al arreglo de tickets
+        this.tickets.push(ticket);
+
         this.grabarArchivo();
 
 
@@ -55,6 +76,9 @@ class TicketControl {
     reiniciarConteo() {
         this.ultimo = 0;
 
+        // Reiniciaando tickets pendientes
+        this.tickets = [];
+
         console.log('Se ha inicializado el sistema');
 
         this.grabarArchivo();
@@ -65,7 +89,8 @@ class TicketControl {
         // Reinicializando el archivo de texto
         let jsonData = {
             ultimo: this.ultimo,
-            hoy: this.hoy
+            hoy: this.hoy,
+            tickets: this.tickets
         };
 
         let jsonDataString = JSON.stringify(jsonData);
