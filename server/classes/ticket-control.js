@@ -23,6 +23,7 @@ class TicketControl {
         if (data.hoy === this.hoy) {
 
 
+            this.ultimo = data.ultimo;
 
 
 
@@ -34,9 +35,29 @@ class TicketControl {
 
     }
 
+    // Siguiente Ticket
+    siguienteTicket() {
+
+        this.ultimo += 1;
+        this.grabarArchivo();
+
+
+        return `Ticket ${this.ultimo}`;
+
+    }
+
 
     // Reiniciando conteo de día
     reiniciarConteo() {
+        this.ultimo = 0;
+
+        console.log('Se ha inicializado el sistema');
+
+        this.grabarArchivo();
+    }
+
+    // Grabando en  data.json
+    grabarArchivo() {
         // Reinicializando el archivo de texto
         let jsonData = {
             ultimo: this.ultimo,
@@ -48,7 +69,7 @@ class TicketControl {
         //Guardando en el archivo de texto
         fs.writeFileSync('./server/data/data.json', jsonDataString);
 
-        console.log('Se ha inicializado el sistema');
+        // console.log('Se ha inicializado el sistema');
     }
 
 
