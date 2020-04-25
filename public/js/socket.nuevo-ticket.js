@@ -19,10 +19,15 @@ socket.on('disconnect', function() {
     console.log('Se perdió la conexión con el servidor');
 });
 
+// Escuchando información del server sobre el ticket actual, recibo una resp
+socket.on('estadoActual', function(resp) {
+    label.text(resp.actual);
+});
+
 // Listener al boton para generar el nuevo ticket
 $('button').on('click', function() {
 
-    // segundo argumento es cuando so interesa que reciba nada pero el tercero es que al final ejecute una función
+    // segundo argumento es cuando no interesa que reciba nada pero el tercero es que al final ejecute una función
     socket.emit('siguienteTicket', null, function(siguienteTicket) {
         // pasando información al elemento html lblNuevoTicket
         label.text(siguienteTicket);

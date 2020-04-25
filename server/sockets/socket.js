@@ -24,6 +24,11 @@ io.on('connection', (client) => {
         callback(siguiente);
     });
 
+    // Emitiendo evento para saber el ticket actual
+    client.emit('estadoActual', {
+        actual: ticketControl.getUltimoTicket()
+    });
+
 
 
     // console.log('Usuario conectado');

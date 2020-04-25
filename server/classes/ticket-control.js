@@ -46,6 +46,10 @@ class TicketControl {
 
     }
 
+    getUltimoTicket() {
+        return `Ticket ${this.ultimo}`;
+    }
+
 
     // Reiniciando conteo de día
     reiniciarConteo() {
