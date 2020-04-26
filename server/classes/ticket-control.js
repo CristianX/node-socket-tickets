@@ -25,6 +25,9 @@ class TicketControl {
 
         this.tickets = [];
 
+        // Ultimos 4 es la pantalla que todos ven cuando se atiende tickets
+        this.ultimos4 = [];
+
 
         // Obteniendo información de data/data.json
         let data = require('../data/data.json');
@@ -39,6 +42,8 @@ class TicketControl {
             this.ultimo = data.ultimo;
 
             this.tickets = data.tickets;
+
+            this.ultimos4 = data.ultimos4;
 
 
 
@@ -71,6 +76,41 @@ class TicketControl {
         return `Ticket ${this.ultimo}`;
     }
 
+    // Atendiendo tickets, recibiendo número de escritrio
+    atenderTicket(escritorio) {
+
+        // Verificando tickets pendientes de atender
+        if (this.tickets.length === 0) {
+            return 'No hay tickets';
+        }
+
+        // Extrayendo número para romper la relación que tiene js con que todos los objetos son pasados por referencia
+        let numeroTicket = this.tickets[0].numero;
+
+        // Eliminando el primer ticket del arreglo para que no se acumule los tickets atendidos
+        this.tickets.shift();
+
+        // Atendiendo ticket
+        let atenderTicket = new Ticket(numeroTicket, escritorio);
+
+        // Agregando item al inicio del arreglo
+        this.ultimos4.unshift(atenderTicket);
+
+        // Verificando solo 4 tickets en el arreglo
+        if (this.ultimos4.length > 4) {
+            // Borrando último item
+            this.ultimos4.splice(-1, 1);
+        }
+
+        console.log('Ultimos 4');
+        console.log(this.ultimos4);
+
+        this.grabarArchivo();
+
+        return atenderTicket;
+
+    }
+
 
     // Reiniciando conteo de día
     reiniciarConteo() {
@@ -78,6 +118,7 @@ class TicketControl {
 
         // Reiniciaando tickets pendientes
         this.tickets = [];
+        this.ultimos4 = [];
 
         console.log('Se ha inicializado el sistema');
 
@@ -90,7 +131,8 @@ class TicketControl {
         let jsonData = {
             ultimo: this.ultimo,
             hoy: this.hoy,
-            tickets: this.tickets
+            tickets: this.tickets,
+            ultimos4: this.ultimos4
         };
 
         let jsonDataString = JSON.stringify(jsonData);
