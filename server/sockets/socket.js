@@ -29,6 +29,23 @@ io.on('connection', (client) => {
         actual: ticketControl.getUltimoTicket()
     });
 
+    client.on('atenderTicket', (data, callback) => {
+
+        if (!data.escritorio) {
+            return callback({
+                err: true,
+                mensaje: 'El escritorio es necesario'
+            });
+        }
+
+        let atenderTicket = ticketControl.atenderTicket(data.escritorio);
+
+        callback(atenderTicket);
+
+        // Actualizar / notificar cambios en los ULTIMOS 4
+
+    });
+
 
 
     // console.log('Usuario conectado');
