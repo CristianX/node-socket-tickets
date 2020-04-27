@@ -72,8 +72,14 @@ class TicketControl {
 
     }
 
+    // Mostrando ultimo ticket
     getUltimoTicket() {
         return `Ticket ${this.ultimo}`;
+    }
+
+    // Mostrando ultimos 4 tickets
+    getUltimos4() {
+        return this.ultimos4;
     }
 
     // Atendiendo tickets, recibiendo número de escritrio
