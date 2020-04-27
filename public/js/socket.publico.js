@@ -22,6 +22,10 @@ var lblEscritorios = [lblEscritorio1, lblEscritorio2, lblEscritorio3, lblEscrito
 socket.on('estadoActual', function(data) {
     // console.log(data);
 
+    // Reproduciendo audio cuando cambie de ticket
+    var audio = new Audio('audio/new-ticket.mp3');
+    audio.play();
+
     actualizarHTML(data.ultimos4);
 
 

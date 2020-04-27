@@ -47,6 +47,13 @@ io.on('connection', (client) => {
 
         // Actualizar / notificar cambios en los ULTIMOS 4
 
+        // Emitiendo ultimos 4 para renderizar (actualizar) el html de publico.html
+        client.broadcast.emit('estadoActual', {
+            ultimos4: ticketControl.getUltimos4()
+        });
+
+
+
     });
 
 
